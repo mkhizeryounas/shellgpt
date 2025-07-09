@@ -27,25 +27,8 @@ jobs:
     - name: Run tests
       run: npm test
       
-    - name: Create Release
+    - name: Build and Test
       run: |
-        gh release create v$(node -p "require('./package.json').version") \
-          --title "Release v$(node -p "require('./package.json').version")" \
-          --notes "## What's Changed
-
-        - Automated release
-        - Version bump to $(node -p "require('./package.json').version")
-
-        ## Installation
-
-        \`\`\`bash
-        npm install shellgpt
-        \`\`\`
-
-        ## Usage
-
-        \`\`\`bash
-        npx shellgpt
-        \`\`\`"
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN || github.token }} 
+        echo "✅ Build and test completed successfully"
+        echo "📦 Ready for manual release"
+        echo "Current version: $(node -p "require('./package.json').version")" 
