@@ -14,7 +14,7 @@ A simple ChatGPT gateway module for Node.js with streaming support. ShellGPT pro
 ## Installation
 
 ```bash
-npm install
+npm i -g shgpt
 ```
 
 ## Usage
