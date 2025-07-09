@@ -6,47 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  version-bump:
-    runs-on: ubuntu-latest
-    outputs:
-      new-version: ${{ steps.bump.outputs.newVersion }}
-      
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Bump version
-      id: bump
-      run: |
-        npm version patch --no-git-tag-version
-        echo "newVersion=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-        
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "chore: bump version to ${{ steps.bump.outputs.newVersion }}"
-        title: "chore: bump version to ${{ steps.bump.outputs.newVersion }}"
-        body: |
-          Automated version bump to ${{ steps.bump.outputs.newVersion }}
-          
-          This PR was created automatically by GitHub Actions.
-        branch: "chore/version-bump-${{ steps.bump.outputs.newVersion }}"
-        delete-branch: true
+  # Version bumping removed - do it manually when needed
         
   release:
-    needs: version-bump
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     
