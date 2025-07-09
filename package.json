@@ -1,6 +1,6 @@
 {
   "name": "shellgpt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple ChatGPT gateway module for Node.js with streaming support",
   "main": "index.js",
   "bin": {
@@ -14,7 +14,16 @@
     "prepublishOnly": "npm test && npm run lint",
     "postinstall": "echo \"ShellGPT installed successfully! Run 'npx shellgpt' to start.\""
   },
-  "keywords": ["chatgpt", "openai", "cli", "chat", "streaming", "ai", "gpt", "terminal"],
+  "keywords": [
+    "chatgpt",
+    "openai",
+    "cli",
+    "chat",
+    "streaming",
+    "ai",
+    "gpt",
+    "terminal"
+  ],
   "author": "ShellGPT Team",
   "license": "ISC",
   "repository": {
