@@ -67,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Built with Node.js and CommonJS modules
 - Uses OpenAI API v4 for chat completions
 - Supports streaming responses for real-time interaction
-- Configuration stored in `~/.shellgpt/config.json`
+- Configuration stored in `~/.shgpt/config.json`
 - Cross-platform compatibility (Windows, macOS, Linux)
 - No external dependencies beyond core Node.js modules and OpenAI SDK
 

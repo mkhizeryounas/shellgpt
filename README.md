@@ -87,32 +87,32 @@ async function example() {
 Start an interactive chat session.
 
 ```bash
-shellgpt chat
-shellgpt chat --model gpt-4 --temperature 0.5
+shgpt chat
+shgpt chat --model gpt-4 --temperature 0.5
 ```
 
 #### `send <message>`
 Send a single message to ChatGPT.
 
 ```bash
-shellgpt send "What is the weather like?"
-shellgpt send "Explain machine learning" --model gpt-4
+shgpt send "What is the weather like?"
+shgpt send "Explain machine learning" --model gpt-4
 ```
 
 #### `config`
 Manage configuration.
 
 ```bash
-shellgpt config --show    # Show current configuration
-shellgpt config --clear   # Clear saved configuration
+shgpt config --show    # Show current configuration
+shgpt config --clear   # Clear saved configuration
 ```
 
 #### `history`
 Manage conversation history.
 
 ```bash
-shellgpt history          # Show conversation history
-shellgpt history --clear  # Clear conversation history
+shgpt history          # Show conversation history
+shgpt history --clear  # Clear conversation history
 ```
 
 ## Interactive Session Commands
@@ -130,7 +130,7 @@ ShellGPT automatically manages your OpenAI API key:
 
 1. **First Run**: You'll be prompted to enter your OpenAI API key
 2. **Validation**: The key is validated before being saved
-3. **Storage**: The key is securely stored in `~/.shellgpt/config.json`
+3. **Storage**: The key is securely stored in `~/.shgpt/config.json`
 4. **Subsequent Runs**: The saved key is automatically loaded
 
 ### API Key Setup

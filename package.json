@@ -1,10 +1,10 @@
 {
-  "name": "shellgpt",
+  "name": "shgpt",
   "version": "1.0.2",
   "description": "A simple ChatGPT gateway module for Node.js with streaming support",
   "main": "index.js",
   "bin": {
-    "shellgpt": "./cli.js"
+    "shgpt": "./cli.js"
   },
   "scripts": {
     "start": "node cli.js",
@@ -12,7 +12,7 @@
     "lint": "echo \"Linting passed\"",
     "test:coverage": "echo \"Coverage: 100%\"",
     "prepublishOnly": "npm test && npm run lint",
-    "postinstall": "echo \"ShellGPT installed successfully! Run 'npx shellgpt' to start.\""
+    "postinstall": "echo \"ShellGPT installed successfully! Run 'npx shgpt' to start.\""
   },
   "keywords": [
     "chatgpt",

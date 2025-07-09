@@ -8,9 +8,9 @@ const program = new Command();
 
 // Set up the program
 program
-    .name('shellgpt')
-    .description('A simple ChatGPT gateway CLI with streaming support')
-    .version('1.0.0');
+  .name('shgpt')
+  .description('A simple ChatGPT gateway CLI with streaming support')
+  .version('1.0.0');
 
 // Add global options
 program

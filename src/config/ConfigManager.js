@@ -4,7 +4,7 @@ const os = require('os');
 
 class ConfigManager {
     constructor() {
-        this.configDir = path.join(os.homedir(), '.shellgpt');
+        this.configDir = path.join(os.homedir(), '.shgpt');
         this.configFile = path.join(this.configDir, 'config.json');
     }
 

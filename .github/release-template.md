@@ -18,20 +18,20 @@
 ### 📦 Installation
 
 ```bash
-npm install shellgpt@latest
+npm install shgpt@latest
 ```
 
 ### 🎯 Usage
 
 ```bash
 # Interactive chat
-npx shellgpt
+npx shgpt
 
 # Single message
-npx shellgpt send "Hello, how are you?"
+npx shgpt send "Hello, how are you?"
 
 # With custom options
-npx shellgpt send "Explain quantum physics" --model gpt-4 --temperature 0.3
+npx shgpt send "Explain quantum physics" --model gpt-4 --temperature 0.3
 ```
 
 ### 📋 Changelog
