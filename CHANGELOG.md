@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Security audit and validation
 - Comprehensive error handling
 - GitHub Actions for CI/CD
-- Dependabot for dependency updates
 - Contributing guidelines and documentation
 
 ### Changed
@@ -61,7 +60,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions workflows for:
   - CI/CD pipeline
   - Automatic publishing to NPM
-  - Dependency updates with Dependabot
   - Security audits
 - Complete documentation including README and contributing guidelines
 
