@@ -1,3 +1,3 @@
 const ShellGPT = require('./src/core/ShellGPT');
 
-module.exports = ShellGPT; 
+module.exports = ShellGPT;
