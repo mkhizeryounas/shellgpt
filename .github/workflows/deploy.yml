@@ -31,4 +31,9 @@ jobs:
       run: |
         echo "✅ Build and test completed successfully"
         echo "📦 Ready for manual release"
-        echo "Current version: $(node -p "require('./package.json').version")" 
+        echo "Current version: $(node -p "require('./package.json').version")"
+        
+    - name: Publish to NPM
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} 
