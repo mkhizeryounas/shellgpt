@@ -35,6 +35,6 @@ jobs:
         echo "Current version: $(node -p "require('./package.json').version")"
         
     - name: Publish to NPM
-      run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} 
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        npm publish 

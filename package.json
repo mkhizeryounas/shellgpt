@@ -28,20 +28,15 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/shellgpt.git"
+    "url": "https://github.com/mkhizeryounas/shellgpt.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/shellgpt/issues"
+    "url": "https://github.com/mkhizeryounas/shellgpt/issues"
   },
-  "homepage": "https://github.com/yourusername/shellgpt#readme",
+  "homepage": "https://github.com/mkhizeryounas/shellgpt#readme",
   "type": "commonjs",
   "dependencies": {
     "commander": "^11.1.0",
-    "fs": "^0.0.1-security",
-    "openai": "^4.20.1",
-    "os": "^0.1.2",
-    "path": "^0.12.7",
-    "readline": "^1.3.0",
-    "user": "^0.0.0"
+    "openai": "^4.20.1"
   }
 }
