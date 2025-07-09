@@ -31,7 +31,7 @@ jobs:
       run: npm audit
       
     - name: Auto-approve Dependabot PRs
-      uses: hmarr/auto-approve-action@v3
+      uses: hmarr/auto-approve-action@v4
       if: github.actor == 'dependabot[bot]'
       
     - name: Enable auto-merge for Dependabot PRs
