@@ -33,7 +33,7 @@ jobs:
         echo "newVersion=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
         
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: "chore: bump version to ${{ steps.bump.outputs.newVersion }}"
