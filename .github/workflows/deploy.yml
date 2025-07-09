@@ -28,28 +28,24 @@ jobs:
       run: npm test
       
     - name: Create Release
-      uses: actions/create-release@v1
+      run: |
+        gh release create v$(node -p "require('./package.json').version") \
+          --title "Release v$(node -p "require('./package.json').version")" \
+          --notes "## What's Changed
+
+        - Automated release
+        - Version bump to $(node -p "require('./package.json').version")
+
+        ## Installation
+
+        \`\`\`bash
+        npm install shellgpt
+        \`\`\`
+
+        ## Usage
+
+        \`\`\`bash
+        npx shellgpt
+        \`\`\`"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ needs.version-bump.outputs.new-version }}
-        release_name: Release v${{ needs.version-bump.outputs.new-version }}
-        body: |
-          ## What's Changed
-          
-          - Automated release
-          - Version bump to ${{ needs.version-bump.outputs.new-version }}
-          
-          ## Installation
-          
-          ```bash
-          npm install shellgpt
-          ```
-          
-          ## Usage
-          
-          ```bash
-          npx shellgpt
-          ```
-        draft: false
-        prerelease: false 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
