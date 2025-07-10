@@ -1,6 +1,6 @@
 # ShellGPT
 
-A simple ChatGPT gateway module for Node.js with streaming support and dynamic system prompts. ShellGPT provides an easy-to-use CLI interface for interacting with OpenAI's ChatGPT API, featuring automatic API key management, conversation history, and context-aware system prompts.
+A simple ChatGPT gateway module for Node.js with streaming support, dynamic system prompts, and intelligent web search capabilities. ShellGPT provides an easy-to-use CLI interface for interacting with OpenAI's ChatGPT API, featuring automatic API key management, conversation history, context-aware system prompts, and AI-driven web search using tools.
 
 ## Features
 
@@ -12,6 +12,7 @@ A simple ChatGPT gateway module for Node.js with streaming support and dynamic s
 - 🛠️ **Modular Architecture** - Well-structured, maintainable code
 - 📅 **Dynamic System Prompts** - Context-aware prompts with current date/time
 - 🧠 **Enhanced AI Awareness** - AI knows its capabilities and limitations
+- 🔍 **Intelligent Web Search** - AI-driven search using tools instead of keyword matching
 
 ## Installation
 
@@ -29,7 +30,10 @@ npm i -g shgpt
 npm start
 
 # Or with custom options
-npm start -- --model gpt-4o-mini --temperature 0.5
+npm start -- --model gpt-4o --temperature 0.5
+
+# Disable web search
+npm start -- --no-search
 ```
 
 #### Send a Single Message
@@ -38,7 +42,19 @@ npm start -- --model gpt-4o-mini --temperature 0.5
 npm start send "What is the capital of France?"
 
 # With custom options
-npm start send "Explain quantum physics" --model gpt-4o-mini --temperature 0.3
+npm start send "Explain quantum physics" --model gpt-4o --temperature 0.3
+
+# With web search enabled
+npm start send "What are the latest news about AI?" --search
+```
+
+#### Test Web Search
+```bash
+# Test web search functionality
+npm start search "OpenAI latest news"
+
+# Test with default query
+npm start search
 ```
 
 #### Manage Configuration
@@ -48,6 +64,9 @@ npm start config --show
 
 # Clear saved configuration
 npm start config --clear
+
+# Clear only search configuration
+npm start config --clear-search
 ```
 
 #### View History
@@ -73,15 +92,20 @@ async function example() {
     
     // Start interactive session
     await shellGPT.startChat();
+    
+    // Test search functionality
+    const searchWorks = await shellGPT.testSearch("test query");
+    console.log('Search working:', searchWorks);
 }
 ```
 
 ## CLI Commands
 
 ### Global Options
-- `-m, --model <model>` - Specify the model to use (default: gpt-4o-mini)
+- `-m, --model <model>` - Specify the model to use (default: gpt-4o)
 - `-t, --temperature <temperature>` - Set temperature (0-2, default: 0.7)
 - `--max-tokens <tokens>` - Set maximum tokens (default: 1000)
+- `--no-search` - Disable web search functionality
 
 ### Commands
 
@@ -90,7 +114,8 @@ Start an interactive chat session.
 
 ```bash
 shellgpt chat
-shellgpt chat --model gpt-4o-mini --temperature 0.5
+shellgpt chat --model gpt-4o --temperature 0.5
+shellgpt chat --no-search
 ```
 
 #### `send <message>`
@@ -98,15 +123,25 @@ Send a single message to ChatGPT.
 
 ```bash
 shellgpt send "What is the weather like?"
-shellgpt send "Explain machine learning" --model gpt-4o-mini
+shellgpt send "Explain machine learning" --model gpt-4o
+shellgpt send "Latest AI news" --search
+```
+
+#### `search [query]`
+Test web search functionality.
+
+```bash
+shellgpt search "OpenAI news"
+shellgpt search
 ```
 
 #### `config`
 Manage configuration.
 
 ```bash
-shellgpt config --show    # Show current configuration
-shellgpt config --clear   # Clear saved configuration
+shellgpt config --show         # Show current configuration
+shellgpt config --clear        # Clear all configuration
+shellgpt config --clear-search # Clear only search configuration
 ```
 
 #### `history`
@@ -142,20 +177,54 @@ The system prompt is automatically processed and includes:
 - Comprehensive capability descriptions
 - Clear limitations and guidelines
 
+## Intelligent Web Search Integration
+
+ShellGPT integrates with SearchAPI.io to provide AI-driven web search capabilities:
+
+### Features
+- **AI-Driven Search** - The AI decides when to search based on context, not keywords
+- **Tool-Based Approach** - Uses OpenAI's function calling for intelligent search decisions
+- **Real-time Information** - Search for current news and information
+- **Multiple Result Types** - Organic results, knowledge graphs, featured snippets
+- **Configurable** - Can be enabled/disabled per session
+
+### How It Works
+Instead of using keyword matching, the AI uses a `search_web` tool to:
+- Automatically detect when current information is needed
+- Choose appropriate search queries based on context
+- Integrate search results seamlessly into responses
+- Provide accurate, up-to-date information
+
+### Setup
+1. Get a free API key from [SearchAPI.io](https://www.searchapi.io/)
+2. Run ShellGPT for the first time
+3. Choose to enable web search when prompted
+4. Enter your SearchAPI key
+5. The key will be validated and saved for future use
+
+### Search Triggers
+The AI automatically uses web search when users ask about:
+- Current events and news
+- Recent developments in any field
+- Real-time data (weather, stocks, etc.)
+- Information that may have changed recently
+- Facts that need verification
+- Time-sensitive information
+
 ## Configuration
 
-ShellGPT automatically manages your OpenAI API key:
+ShellGPT automatically manages your API keys:
 
-1. **First Run**: You'll be prompted to enter your OpenAI API key
-2. **Validation**: The key is validated before being saved
-3. **Storage**: The key is securely stored in `~/.shellgpt/config.json`
-4. **Subsequent Runs**: The saved key is automatically loaded
-
-### API Key Setup
-
+### OpenAI API Key
 1. Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
 2. Run ShellGPT for the first time
-3. Enter your API key when prompted
+3. Enter your OpenAI API key when prompted
+4. The key will be validated and saved for future use
+
+### SearchAPI Key (Optional)
+1. Get your free API key from [SearchAPI.io](https://www.searchapi.io/)
+2. When prompted, choose to enable web search functionality
+3. Enter your SearchAPI key
 4. The key will be validated and saved for future use
 
 ## Project Structure
@@ -173,6 +242,8 @@ shellgpt/
 │   │   └── ConfigManager.js    # Configuration file management
 │   ├── core/
 │   │   └── ShellGPT.js         # Main orchestrator class
+│   ├── services/
+│   │   └── SearchAPIService.js # Web search integration
 │   └── utils/
 │       └── PromptProcessor.js  # Dynamic prompt processing
 ├── cli.js                      # CLI entry point with Commander.js
@@ -186,6 +257,7 @@ shellgpt/
 
 - `openai` - OpenAI API client
 - `commander` - CLI argument parsing
+- `axios` - HTTP client for web search
 - `readline` - Interactive input handling
 - `fs`, `path`, `os` - File system and OS utilities
 
@@ -193,11 +265,13 @@ shellgpt/
 
 ShellGPT includes comprehensive error handling:
 
-- **Invalid API Key**: Automatic validation and retry
+- **Invalid API Keys**: Automatic validation and retry
 - **Network Errors**: Graceful error messages
 - **Configuration Issues**: Clear guidance for setup
 - **Graceful Shutdown**: Proper cleanup on exit
 - **Prompt Processing**: Fallback prompts if file reading fails
+- **Search API Errors**: Graceful handling of search failures
+- **Tool Call Errors**: Proper handling of function calling errors
 
 ## Security
 
@@ -205,6 +279,7 @@ ShellGPT includes comprehensive error handling:
 - Keys are validated before storage
 - No keys are logged or displayed
 - Configuration files use proper permissions
+- Search API calls are made securely over HTTPS
 
 ## Contributing
 

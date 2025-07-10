@@ -23,7 +23,9 @@
     "streaming",
     "ai",
     "gpt",
-    "terminal"
+    "terminal",
+    "web-search",
+    "search-api"
   ],
   "author": "ShellGPT Team",
   "license": "ISC",
@@ -37,6 +39,7 @@
   "homepage": "https://github.com/mkhizeryounas/shellgpt#readme",
   "type": "commonjs",
   "dependencies": {
+    "axios": "^1.10.0",
     "commander": "^14.0.0",
     "openai": "^5.8.3"
   }

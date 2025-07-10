@@ -21,6 +21,19 @@ class ConfigManager {
     return null;
   }
 
+  // Load SearchAPI key from config file
+  loadSearchApiKey() {
+    try {
+      if (fs.existsSync(this.configFile)) {
+        const config = JSON.parse(fs.readFileSync(this.configFile, 'utf8'));
+        return config.searchApiKey;
+      }
+    } catch (error) {
+      console.error('Error loading search config:', error.message);
+    }
+    return null;
+  }
+
   // Save API key to config file
   async saveApiKey(apiKey) {
     try {
@@ -29,15 +42,51 @@ class ConfigManager {
         fs.mkdirSync(this.configDir, { recursive: true });
       }
 
-      const config = {
-        apiKey: apiKey,
-        createdAt: new Date().toISOString(),
-      };
+      // Load existing config or create new one
+      let config = {};
+      if (fs.existsSync(this.configFile)) {
+        config = JSON.parse(fs.readFileSync(this.configFile, 'utf8'));
+      }
+
+      config.apiKey = apiKey;
+      config.updatedAt = new Date().toISOString();
+
+      if (!config.createdAt) {
+        config.createdAt = new Date().toISOString();
+      }
 
       fs.writeFileSync(this.configFile, JSON.stringify(config, null, 2));
-      console.log('✅ API key saved successfully');
+      console.log('✅ OpenAI API key saved successfully');
     } catch (error) {
       console.error('Error saving API key:', error.message);
+    }
+  }
+
+  // Save SearchAPI key to config file
+  async saveSearchApiKey(searchApiKey) {
+    try {
+      // Create config directory if it doesn't exist
+      if (!fs.existsSync(this.configDir)) {
+        fs.mkdirSync(this.configDir, { recursive: true });
+      }
+
+      // Load existing config or create new one
+      let config = {};
+      if (fs.existsSync(this.configFile)) {
+        config = JSON.parse(fs.readFileSync(this.configFile, 'utf8'));
+      }
+
+      config.searchApiKey = searchApiKey;
+      config.updatedAt = new Date().toISOString();
+
+      if (!config.createdAt) {
+        config.createdAt = new Date().toISOString();
+      }
+
+      fs.writeFileSync(this.configFile, JSON.stringify(config, null, 2));
+      console.log('✅ SearchAPI key saved successfully');
+    } catch (error) {
+      console.error('Error saving SearchAPI key:', error.message);
     }
   }
 
@@ -51,6 +100,18 @@ class ConfigManager {
     return this.configDir;
   }
 
+  // Get full configuration
+  getConfig() {
+    try {
+      if (fs.existsSync(this.configFile)) {
+        return JSON.parse(fs.readFileSync(this.configFile, 'utf8'));
+      }
+    } catch (error) {
+      console.error('Error loading config:', error.message);
+    }
+    return null;
+  }
+
   // Clear configuration
   clearConfig() {
     try {
@@ -62,6 +123,24 @@ class ConfigManager {
       }
     } catch (error) {
       console.error('Error clearing config:', error.message);
+    }
+  }
+
+  // Clear only SearchAPI configuration
+  clearSearchConfig() {
+    try {
+      if (fs.existsSync(this.configFile)) {
+        const config = JSON.parse(fs.readFileSync(this.configFile, 'utf8'));
+        delete config.searchApiKey;
+        config.updatedAt = new Date().toISOString();
+
+        fs.writeFileSync(this.configFile, JSON.stringify(config, null, 2));
+        console.log('✅ SearchAPI configuration cleared successfully');
+      } else {
+        console.log('ℹ️  No configuration file found');
+      }
+    } catch (error) {
+      console.error('Error clearing search config:', error.message);
     }
   }
 }
