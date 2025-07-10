@@ -1,9 +1,17 @@
 const OpenAI = require('openai');
+const PromptProcessor = require('../utils/PromptProcessor');
 
 class ChatManager {
   constructor(apiKey) {
     this.openai = new OpenAI({ apiKey });
     this.conversationHistory = [];
+    this.promptProcessor = new PromptProcessor();
+    this.systemPrompt = '';
+  }
+
+  // Initialize system prompt
+  async initializeSystemPrompt() {
+    this.systemPrompt = await this.promptProcessor.getProcessedPrompt();
   }
 
   // Send a message to ChatGPT with streaming
@@ -15,16 +23,30 @@ class ChatManager {
       stream = true,
     } = options;
 
+    // Initialize system prompt if not already done
+    if (!this.systemPrompt) {
+      await this.initializeSystemPrompt();
+    }
+
     // Add user message to conversation history
     this.conversationHistory.push({
       role: 'user',
       content: message,
     });
 
+    // Prepare messages with system prompt
+    const messages = [
+      {
+        role: 'system',
+        content: this.systemPrompt,
+      },
+      ...this.conversationHistory,
+    ];
+
     try {
       const stream = await this.openai.chat.completions.create({
         model: model,
-        messages: this.conversationHistory,
+        messages: messages,
         temperature: temperature,
         max_tokens: maxTokens,
         stream: true,
@@ -81,6 +103,16 @@ class ChatManager {
   // Get conversation count
   getConversationCount() {
     return this.conversationHistory.length;
+  }
+
+  // Get current date info
+  getCurrentDateInfo() {
+    return this.promptProcessor.getDateInfo();
+  }
+
+  // Refresh system prompt (useful for long-running sessions)
+  async refreshSystemPrompt() {
+    await this.initializeSystemPrompt();
   }
 }
 

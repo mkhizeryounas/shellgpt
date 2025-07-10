@@ -1,6 +1,6 @@
 # ShellGPT
 
-A simple ChatGPT gateway module for Node.js with streaming support. ShellGPT provides an easy-to-use CLI interface for interacting with OpenAI's ChatGPT API, featuring automatic API key management and conversation history.
+A simple ChatGPT gateway module for Node.js with streaming support and dynamic system prompts. ShellGPT provides an easy-to-use CLI interface for interacting with OpenAI's ChatGPT API, featuring automatic API key management, conversation history, and context-aware system prompts.
 
 ## Features
 
@@ -10,6 +10,8 @@ A simple ChatGPT gateway module for Node.js with streaming support. ShellGPT pro
 - 📚 **Conversation History** - View and manage chat history
 - ⚙️ **Configurable Options** - Customize model, temperature, and tokens
 - 🛠️ **Modular Architecture** - Well-structured, maintainable code
+- 📅 **Dynamic System Prompts** - Context-aware prompts with current date/time
+- 🧠 **Enhanced AI Awareness** - AI knows its capabilities and limitations
 
 ## Installation
 
@@ -27,7 +29,7 @@ npm i -g shgpt
 npm start
 
 # Or with custom options
-npm start -- --model gpt-4 --temperature 0.5
+npm start -- --model gpt-4o-mini --temperature 0.5
 ```
 
 #### Send a Single Message
@@ -36,7 +38,7 @@ npm start -- --model gpt-4 --temperature 0.5
 npm start send "What is the capital of France?"
 
 # With custom options
-npm start send "Explain quantum physics" --model gpt-4 --temperature 0.3
+npm start send "Explain quantum physics" --model gpt-4o-mini --temperature 0.3
 ```
 
 #### Manage Configuration
@@ -77,7 +79,7 @@ async function example() {
 ## CLI Commands
 
 ### Global Options
-- `-m, --model <model>` - Specify the model to use (default: gpt-3.5-turbo)
+- `-m, --model <model>` - Specify the model to use (default: gpt-4o-mini)
 - `-t, --temperature <temperature>` - Set temperature (0-2, default: 0.7)
 - `--max-tokens <tokens>` - Set maximum tokens (default: 1000)
 
@@ -88,7 +90,7 @@ Start an interactive chat session.
 
 ```bash
 shellgpt chat
-shellgpt chat --model gpt-4 --temperature 0.5
+shellgpt chat --model gpt-4o-mini --temperature 0.5
 ```
 
 #### `send <message>`
@@ -96,7 +98,7 @@ Send a single message to ChatGPT.
 
 ```bash
 shellgpt send "What is the weather like?"
-shellgpt send "Explain machine learning" --model gpt-4
+shellgpt send "Explain machine learning" --model gpt-4o-mini
 ```
 
 #### `config`
@@ -123,6 +125,22 @@ When in an interactive chat session, you can use these commands:
 - `history` - Show conversation history
 - `help` - Show available commands
 - `quit` or `exit` - Exit the chat session
+
+## Dynamic System Prompts
+
+ShellGPT uses dynamic system prompts that include:
+
+- **Current Date & Time** - Automatically updated for each session
+- **AI Capabilities** - Clear awareness of what the AI can and cannot do
+- **Response Guidelines** - Consistent behavior and formatting
+- **Context Awareness** - Terminal/CLI interaction context
+
+The system prompt is automatically processed and includes:
+- Current date in readable format
+- Current time with timezone
+- Day of the week
+- Comprehensive capability descriptions
+- Clear limitations and guidelines
 
 ## Configuration
 
@@ -153,10 +171,13 @@ shellgpt/
 │   │   └── InteractiveSession.js # Interactive CLI session
 │   ├── config/
 │   │   └── ConfigManager.js    # Configuration file management
-│   └── core/
-│       └── ShellGPT.js         # Main orchestrator class
+│   ├── core/
+│   │   └── ShellGPT.js         # Main orchestrator class
+│   └── utils/
+│       └── PromptProcessor.js  # Dynamic prompt processing
 ├── cli.js                      # CLI entry point with Commander.js
 ├── index.js                    # Module entry point
+├── SYSTEM_PROMPT.md            # Dynamic system prompt template
 ├── package.json                # Dependencies and metadata
 └── README.md                   # This file
 ```
@@ -176,6 +197,7 @@ ShellGPT includes comprehensive error handling:
 - **Network Errors**: Graceful error messages
 - **Configuration Issues**: Clear guidance for setup
 - **Graceful Shutdown**: Proper cleanup on exit
+- **Prompt Processing**: Fallback prompts if file reading fails
 
 ## Security
 
